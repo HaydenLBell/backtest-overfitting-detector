@@ -31,5 +31,5 @@ def matrix_pretty_print(matrix):
         print(row)
 
 
-print(daily_returns(5, 5, seed=42))
-matrix_pretty_print(daily_returns(5, 5, seed=42))
+#print(daily_returns(5, 5, seed=42))
+#matrix_pretty_print(daily_returns(5, 5, seed=42))

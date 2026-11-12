@@ -1,5 +1,5 @@
 import numpy as np
-
+from scipy.stats import skew, kurtosis
 
 test = np.array([
     [0.02,  0.01],
@@ -58,9 +58,9 @@ def sharpe_ratio(returns, annualise=False):
 
 
 def skewness(returns):
-    pass
+    skew(returns, axis=0)
 
 def kurtosis(returns):
-    pass
+    kurtosis(returns, axis=0, fisher=False) # fisher false makes a normal dist give 3 not 0, fisher true would be 3-3=0
 
-print(sharpe_ratio(test))
+#print(sharpe_ratio(test))
