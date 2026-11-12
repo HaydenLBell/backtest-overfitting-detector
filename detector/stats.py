@@ -1,12 +1,6 @@
 import numpy as np
 from scipy.stats import skew, kurtosis
 
-test = np.array([
-    [0.02,  0.01],
-    [-0.01, 0.01],
-    [0.03,  0.01],
-    [0.00,  0.01],
-])
 
 
 ########################
@@ -54,13 +48,18 @@ def sharpe_ratio(returns, annualise=False):
 
     return sr
 
-    
 
+#############################
+###   SKEW and KURTOSIS   ###
+#############################
 
 def skewness(returns):
     skew(returns, axis=0)
 
-def kurtosis(returns):
-    kurtosis(returns, axis=0, fisher=False) # fisher false makes a normal dist give 3 not 0, fisher true would be 3-3=0
 
-#print(sharpe_ratio(test))
+"""Returns raw (Pearson) kurtosis: normal distribution = 3."""
+def kurtosis_raw(returns):
+    kurtosis(returns, axis=0, fisher=False) # fisher false makes a normal dist use 3 not 0, fisher true would be 3-3=0
+
+
+
