@@ -54,12 +54,12 @@ def sharpe_ratio(returns, annualise=False):
 #############################
 
 def skewness(returns):
-    skew(returns, axis=0)
+    return skew(returns, axis=0)
 
 
 """Returns raw (Pearson) kurtosis: normal distribution = 3."""
 def kurtosis_raw(returns):
-    kurtosis(returns, axis=0, fisher=False) # fisher false makes a normal dist use 3 not 0, fisher true would be 3-3=0
+    return kurtosis(returns, axis=0, fisher=False) # fisher false makes a normal dist use 3 not 0, fisher true would be 3-3=0
 
 
 

@@ -1,9 +1,12 @@
 import numpy as np
 from scipy.stats import norm
+from detector.stats import sharpe_ratio, skewness, kurtosis_raw
+from detector.synthetic import daily_returns
 
 
 EULER_GAMMA = 0.5772156649
 
+# confidence percentage of sorts
 def probabilistic_sharpe_ratio(sr, sr_benchmark, gamma3, gamma4, num_days):
     """
     sr           -- observed DAILY Sharpe ratio (not annualised)
@@ -48,3 +51,38 @@ def expected_max_sharpe(sharpes, num_trials=None):
     widths_out = (1 - EULER_GAMMA) * guess_1 + EULER_GAMMA * guess_2
 
     return width * widths_out
+
+
+def deflated_sharpe_ratio(returns, num_trials=None):
+
+    num_days = returns.shape[0]
+
+    # daily Sharpe for every strategy
+    all_sharpes = sharpe_ratio(returns)
+
+    # find the index with the best strategy
+    best_index = np.nanargmax(all_sharpes)
+
+    # get the sharpe at position of best strat index
+    best_sharpe = all_sharpes[best_index]
+
+    # grab skew and kurtosis of the best strategy's returns (code means all days, but only w the best index)
+    best_returns = returns[:, best_index]
+    gamma3 = skewness(best_returns)
+    gamma4 = kurtosis_raw(best_returns)
+
+    # he Sharpe pure luck would give the best of N (expectimax)
+    sr_star = expected_max_sharpe(all_sharpes, num_trials)
+
+    # PSR using the luck benchmark
+    dsr = probabilistic_sharpe_ratio(best_sharpe, sr_star, gamma3, gamma4, num_days)
+
+    return dsr, best_index
+
+
+
+
+returns = daily_returns(252, 1000, seed=42)
+dsr, best = deflated_sharpe_ratio(returns)
+print("Best strategy:", best)
+print("DSR:", round(dsr, 3))
