@@ -8,6 +8,14 @@ def daily_returns(num_days, num_strategies, daily_vol=0.01, seed=None):
     returns_matrix = rng.normal(0, daily_vol, size=(num_days, num_strategies))
     return returns_matrix
 
+def returns_with_edge(num_days, num_strategies, edge, edge_column=0, daily_vol=0.01, seed=None):
+    returns = daily_returns(num_days, num_strategies, daily_vol, seed)
+
+    returns[:, edge_column] = returns[:, edge_column] + edge    
+
+    return returns
+
+    
 
 def matrix_pretty_print(matrix):
     num_days = matrix.shape[0]
@@ -31,5 +39,15 @@ def matrix_pretty_print(matrix):
         print(row)
 
 
+###################
+###   TESTING   ###
+#################### 
+
 #print(daily_returns(5, 5, seed=42))
 #matrix_pretty_print(daily_returns(5, 5, seed=42))
+
+#plain = daily_returns(5, 3, seed=1)
+#with_edge = returns_with_edge(5, 3, 0.002, seed=1)
+
+#print(plain.mean(axis=0))
+#print(with_edge.mean(axis=0))

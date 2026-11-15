@@ -82,7 +82,7 @@ def deflated_sharpe_ratio(returns, num_trials=None):
 
 
 
-returns = daily_returns(252, 1000, seed=42)
-dsr, best = deflated_sharpe_ratio(returns)
-print("Best strategy:", best)
-print("DSR:", round(dsr, 3))
+#returns = daily_returns(252, 1000, seed=42)
+#dsr, best = deflated_sharpe_ratio(returns)
+#print("Best strategy:", best)
+#print("DSR:", round(dsr, 3))
